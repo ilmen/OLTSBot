@@ -39,7 +39,7 @@ namespace OurLittleTastyServerBot.Classes.Db
                     [id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                     [updateOuterId] INTEGER,
                     [messageOuterId] INTEGER,
-                    [time] INTEGER NOT NULL,
+                    [sendTime] INTEGER NOT NULL,
                     [text] char(2000) NOT NULL,
                     [chatOuterId] INTEGER,
                     [userOuterId] INTEGER,

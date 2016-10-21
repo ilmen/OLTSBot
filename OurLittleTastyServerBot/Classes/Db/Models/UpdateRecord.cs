@@ -7,14 +7,14 @@ namespace OurLittleTastyServerBot.Classes.Db.Models
     {
         public static class Factory
         {
-            private static Result<UpdateRecord> CreateIfValid(bool isNew, Int32 id, Int32 updateOuterId, Int32 messageOuterId, DateTime time, string text, Int32 chatOuterId, Int32 userOuterId, string userName)
+            private static Result<UpdateRecord> CreateIfValid(bool isNew, Int32 id, Int32 updateOuterId, Int32 messageOuterId, DateTime sendTime, string text, Int32 chatOuterId, Int32 userOuterId, string userName)
             {
                 var record = new UpdateRecord
                 {
                     Id = id,
                     UpdateOuterId = updateOuterId,
                     MessageOuterId = messageOuterId,
-                    Time = time,
+                    SendTime = sendTime,
                     Text = text,
                     ChatOuterId = chatOuterId,
                     UserOuterId = userOuterId,
@@ -24,28 +24,28 @@ namespace OurLittleTastyServerBot.Classes.Db.Models
                 return !validateResult.IsFailured ? Result.Ok(record) : Result.Fail<UpdateRecord>(validateResult);
             }
 
-            public static Result<UpdateRecord> Create(Int32 id, Int32 updateOuterId, Int32 messageOuterId, DateTime time, string text, Int32 chatOuterId, Int32 userOuterId, string userName)
+            public static Result<UpdateRecord> Create(Int32 id, Int32 updateOuterId, Int32 messageOuterId, DateTime sendTime, string text, Int32 chatOuterId, Int32 userOuterId, string userName)
             {
-                return CreateIfValid(false, id, updateOuterId, messageOuterId, time, text, chatOuterId, userOuterId, userName);
+                return CreateIfValid(false, id, updateOuterId, messageOuterId, sendTime, text, chatOuterId, userOuterId, userName);
             }
 
-            public static Result<UpdateRecord> CreateEmpty(Int32 updateOuterId, Int32 messageOuterId, DateTime time, string text, Int32 chatOuterId, Int32 userOuterId, string userName)
+            public static Result<UpdateRecord> CreateEmpty(Int32 updateOuterId, Int32 messageOuterId, DateTime sendTime, string text, Int32 chatOuterId, Int32 userOuterId, string userName)
             {
-                return CreateIfValid(true, 0, updateOuterId, messageOuterId, time, text, chatOuterId, userOuterId, userName);
+                return CreateIfValid(true, 0, updateOuterId, messageOuterId, sendTime, text, chatOuterId, userOuterId, userName);
             }
 
             public static Result<UpdateRecord> Update(UpdateRecord value,
                 Int32? id = null,
                 Int32? updateOuterId = null,
                 Int32? messageOuterId = null,
-                DateTime? time = null,
+                DateTime? sendTime = null,
                 string text = null,
                 Int32? chatOuterId = null,
                 Int32? userOuterId = null,
                 string userName = null)
             {
                 var result = CreateIfValid(false, id ?? value.Id, updateOuterId ?? value.UpdateOuterId,
-                    messageOuterId ?? value.MessageOuterId, time ?? value.Time, text ?? value.Text,
+                    messageOuterId ?? value.MessageOuterId, sendTime ?? value.SendTime, text ?? value.Text,
                     chatOuterId ?? value.ChatOuterId, userOuterId ?? value.UserOuterId, userName ?? value.UserName);
                 return result;
             }
@@ -92,7 +92,7 @@ namespace OurLittleTastyServerBot.Classes.Db.Models
         public Int32 MessageOuterId
         { get; private set; }
 
-        public DateTime Time
+        public DateTime SendTime
         { get; private set; }
 
         public string Text

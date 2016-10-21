@@ -58,7 +58,7 @@ namespace OurLittleTastyServerBot.Classes.Db.Repositories
                 new SQLiteParameter("@id"),     // autoincrement
                 new SQLiteParameter("@updateOuterId", value.UpdateOuterId),
                 new SQLiteParameter("@messageOuterId", value.MessageOuterId),
-                new SQLiteParameter("@time", UnixDateTime.ToUnixFormat(value.Time)),
+                new SQLiteParameter("@sendTime", UnixDateTime.ToUnixFormat(value.SendTime)),
                 new SQLiteParameter("@text", value.Text),
                 new SQLiteParameter("@chatOuterId", value.ChatOuterId),
                 new SQLiteParameter("@userOuterId", value.UserOuterId),
