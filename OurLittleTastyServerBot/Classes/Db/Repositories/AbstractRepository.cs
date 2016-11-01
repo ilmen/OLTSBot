@@ -71,10 +71,26 @@ namespace OurLittleTastyServerBot.Classes.Db.Repositories
             return Result.Ok();
         }
 
-        protected abstract Result<List<TRecord>> SelectFromDb();
-        protected abstract Result<Int32> InsertIntoDb(TRecord value);
-        protected abstract Result DeleteFromDb(Int32 id);
-        protected abstract Result UpdateIntoDb(TRecord value);
+        protected virtual Result<List<TRecord>> SelectFromDb()
+        {
+            return Result.Ok(new List<TRecord>());
+        }
+
+        protected virtual Result<Int32> InsertIntoDb(TRecord value)
+        {
+            return Result.Ok(0);
+        }
+
+        protected virtual Result DeleteFromDb(Int32 id)
+        {
+            return Result.Ok();
+        }
+
+        protected virtual Result UpdateIntoDb(TRecord value)
+        {
+            return Result.Ok();
+        }
+
         protected abstract Result<TRecord> GetCopyWithNewIdentity(TRecord source, Int32 id);
     }
 }

@@ -63,7 +63,8 @@
     <Compile Include="Classes\Configuration\BotSettings.cs" />
     <Compile Include="Classes\Configuration\JsonBotSettingsProvider.cs" />
     <Compile Include="Classes\Db\Models\Cost.cs" />
-    <Compile Include="Classes\Db\Repositories\DialogRepository.cs" />
+    <Compile Include="Classes\Db\Models\DialogRecord.cs" />
+    <Compile Include="Classes\Db\Repositories\DialogRepositoryInMemory.cs" />
     <Compile Include="Classes\Db\Repositories\IRecordWithIdentity.cs" />
     <Compile Include="Classes\Db\SqliteDatabase.cs" />
     <Compile Include="Classes\Db\Repositories\AbstractRepository.cs" />

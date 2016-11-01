@@ -17,7 +17,8 @@ namespace OurLittleTastyServerBot.Classes
         private readonly BotSettings _botSettings;
         private readonly EventBroker _eventBroker;
         private readonly SqliteDatabase _db;
-        private readonly AbstractRepository<UpdateRecord> _repository;
+        private readonly AbstractRepository<UpdateRecord> _updateRepository;
+        private readonly AbstractRepository<DialogRecord> _dialogRepository;
 
         public Bot(BotSettings botSettings, EventBroker eventBroker)
         {
@@ -25,19 +26,20 @@ namespace OurLittleTastyServerBot.Classes
             _eventBroker = eventBroker;
 
             _db = new SqliteDatabase("database3.db");
-            _repository = new UpdateRecordRepositoryInSQLite(_db);
+            _updateRepository = new UpdateRecordRepositoryInSQLite(_db);
+            _dialogRepository = new DialogRepositoryInMemory();
 
             InitializeEventBroker();
         }
 
         private void InitializeEventBroker()
         {
-            _eventBroker.OfType<UpdateEventArgs>().Subscribe(new DatabaseWorker(_eventBroker, _repository));
+            _eventBroker.OfType<UpdateEventArgs>().Subscribe(new DatabaseWorker(_eventBroker, _updateRepository));
             _eventBroker.OfType<UpdateRecordEventArgs>().Subscribe(new CommandParser(_eventBroker));
             _eventBroker.OfType<MessageEventArgs>().Subscribe(new MessageWorker(_botSettings));
             _eventBroker.OfType<CommandEventArgs>().Where(x => x.Command == EnCommand.WeatherRequst).Subscribe(new WeatherWorker(_eventBroker));
             _eventBroker.OfType<CommandEventArgs>().Where(x => x.Command == EnCommand.Text).Subscribe(new EchoTextWorker(_eventBroker));
-            _eventBroker.OfType<CommandEventArgs>().Where(x => x.Command == EnCommand.AddSimpleCostRequest).Subscribe(new SimpleAddingCostWorker(_eventBroker));
+            _eventBroker.OfType<CommandEventArgs>().Where(x => x.Command == EnCommand.AddSimpleCostRequest).Subscribe(new SimpleAddingCostWorker(_eventBroker));    //, _dialogRepository));
         }
 
         public void Start()
