@@ -53,12 +53,13 @@ namespace OurLittleTastyServerBot.Classes.Db.Repositories
         {
             // TODO FIXME: Сделать защиту от sql вставок, проверить работает ли как защита SQLiteParameter
 
-            const string INSERT_QUERY = @"insert into updates values (?,?,?,?,?,?,?,?)";
+            const string INSERT_QUERY = @"insert into updates values (?,?,?,?,?,?,?,?,?)";
             var insertResult = _db.ExecuteNonQuery(INSERT_QUERY,
                 new SQLiteParameter("@id"),     // autoincrement
                 new SQLiteParameter("@updateOuterId", value.UpdateOuterId),
                 new SQLiteParameter("@messageOuterId", value.MessageOuterId),
                 new SQLiteParameter("@sendTime", UnixDateTime.ToUnixFormat(value.SendTime)),
+                new SQLiteParameter("@insertTime", UnixDateTime.ToUnixFormat(value.InsertTime)),
                 new SQLiteParameter("@text", value.Text),
                 new SQLiteParameter("@chatOuterId", value.ChatOuterId),
                 new SQLiteParameter("@userOuterId", value.UserOuterId),
@@ -104,13 +105,14 @@ namespace OurLittleTastyServerBot.Classes.Db.Repositories
                 var id = Convert.ToInt32(row["id"]);
                 var originalId = Convert.ToInt32(row["updateOuterId"]);
                 var messageId = Convert.ToInt32(row["messageOuterId"]);
-                var time = UnixDateTime.FromUnixFormat((Int64)row["time"]);
+                var time = UnixDateTime.FromUnixFormat((Int64)row["sendTime"]);
+                var insertTime = UnixDateTime.FromUnixFormat((Int64)row["insertTime"]);
                 var text = row["text"].ToString().Trim();
                 var chatId = Convert.ToInt32(row["chatOuterId"]);
                 var userId = Convert.ToInt32(row["userOuterId"]);
                 var login = row["userName"].ToString().Trim();
 
-                var update = UpdateRecord.Factory.Create(id, originalId, messageId, time, text, chatId, userId, login);
+                var update = UpdateRecord.Factory.Create(id, originalId, messageId, time, insertTime, text, chatId, userId, login);
                 return update;
             }
             catch (Exception ex)

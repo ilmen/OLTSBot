@@ -7,7 +7,7 @@ namespace OurLittleTastyServerBot.Classes.Db.Models
     {
         public static class Factory
         {
-            private static Result<UpdateRecord> CreateIfValid(bool isNew, Int32 id, Int32 updateOuterId, Int32 messageOuterId, DateTime sendTime, string text, Int32 chatOuterId, Int32 userOuterId, string userName)
+            private static Result<UpdateRecord> CreateIfValid(bool isNew, Int32 id, Int32 updateOuterId, Int32 messageOuterId, DateTime sendTime, DateTime insertTime, string text, Int32 chatOuterId, Int32 userOuterId, string userName)
             {
                 var record = new UpdateRecord
                 {
@@ -15,6 +15,7 @@ namespace OurLittleTastyServerBot.Classes.Db.Models
                     UpdateOuterId = updateOuterId,
                     MessageOuterId = messageOuterId,
                     SendTime = sendTime,
+                    InsertTime = insertTime,
                     Text = text,
                     ChatOuterId = chatOuterId,
                     UserOuterId = userOuterId,
@@ -24,14 +25,14 @@ namespace OurLittleTastyServerBot.Classes.Db.Models
                 return !validateResult.IsFailured ? Result.Ok(record) : Result.Fail<UpdateRecord>(validateResult);
             }
 
-            public static Result<UpdateRecord> Create(Int32 id, Int32 updateOuterId, Int32 messageOuterId, DateTime sendTime, string text, Int32 chatOuterId, Int32 userOuterId, string userName)
+            public static Result<UpdateRecord> Create(Int32 id, Int32 updateOuterId, Int32 messageOuterId, DateTime sendTime, DateTime insertTime, string text, Int32 chatOuterId, Int32 userOuterId, string userName)
             {
-                return CreateIfValid(false, id, updateOuterId, messageOuterId, sendTime, text, chatOuterId, userOuterId, userName);
+                return CreateIfValid(false, id, updateOuterId, messageOuterId, sendTime, insertTime, text, chatOuterId, userOuterId, userName);
             }
 
-            public static Result<UpdateRecord> CreateEmpty(Int32 updateOuterId, Int32 messageOuterId, DateTime sendTime, string text, Int32 chatOuterId, Int32 userOuterId, string userName)
+            public static Result<UpdateRecord> CreateEmpty(Int32 updateOuterId, Int32 messageOuterId, DateTime sendTime, DateTime insertTime, string text, Int32 chatOuterId, Int32 userOuterId, string userName)
             {
-                return CreateIfValid(true, 0, updateOuterId, messageOuterId, sendTime, text, chatOuterId, userOuterId, userName);
+                return CreateIfValid(true, 0, updateOuterId, messageOuterId, sendTime, insertTime, text, chatOuterId, userOuterId, userName);
             }
 
             public static Result<UpdateRecord> Update(UpdateRecord value,
@@ -39,14 +40,16 @@ namespace OurLittleTastyServerBot.Classes.Db.Models
                 Int32? updateOuterId = null,
                 Int32? messageOuterId = null,
                 DateTime? sendTime = null,
+                DateTime? insertTime = null,
                 string text = null,
                 Int32? chatOuterId = null,
                 Int32? userOuterId = null,
                 string userName = null)
             {
                 var result = CreateIfValid(false, id ?? value.Id, updateOuterId ?? value.UpdateOuterId,
-                    messageOuterId ?? value.MessageOuterId, sendTime ?? value.SendTime, text ?? value.Text,
-                    chatOuterId ?? value.ChatOuterId, userOuterId ?? value.UserOuterId, userName ?? value.UserName);
+                    messageOuterId ?? value.MessageOuterId, sendTime ?? value.SendTime, insertTime ?? value.InsertTime,
+                    text ?? value.Text, chatOuterId ?? value.ChatOuterId, userOuterId ?? value.UserOuterId,
+                    userName ?? value.UserName);
                 return result;
             }
 
@@ -93,6 +96,9 @@ namespace OurLittleTastyServerBot.Classes.Db.Models
         { get; private set; }
 
         public DateTime SendTime
+        { get; private set; }
+
+        public DateTime InsertTime
         { get; private set; }
 
         public string Text

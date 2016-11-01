@@ -53,9 +53,10 @@ namespace OurLittleTastyServerBot.Classes.Observers
         {
             try
             {
+                var insertTime = DateTime.Now;
                 var sendTime = UnixDateTime.FromUnixFormat(value.message.UtcDateTimeInUnitFormat);
-                    
-                var result = UpdateRecord.Factory.CreateEmpty(value.update_id, value.message.message_id, sendTime, value.message.text, value.message.chat.id, value.message.from.id, value.message.from.first_name);
+
+                var result = UpdateRecord.Factory.CreateEmpty(value.update_id, value.message.message_id, sendTime, insertTime, value.message.text, value.message.chat.id, value.message.from.id, value.message.from.first_name);
                     
                 return result;
             }

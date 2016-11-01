@@ -40,6 +40,7 @@ namespace OurLittleTastyServerBot.Classes.Db
                     [updateOuterId] INTEGER,
                     [messageOuterId] INTEGER,
                     [sendTime] INTEGER NOT NULL,
+                    [insertTime] INTEGER NOT NULL,
                     [text] char(2000) NOT NULL,
                     [chatOuterId] INTEGER,
                     [userOuterId] INTEGER,
