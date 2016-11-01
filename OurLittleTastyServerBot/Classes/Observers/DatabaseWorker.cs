@@ -10,9 +10,9 @@ namespace OurLittleTastyServerBot.Classes.Observers
     public class DatabaseWorker : AbstractObserver<EventArgs>
     {
         private readonly EventBroker _broker;
-        private readonly AbstractUpdateRecordRepository _repository;
+        private readonly AbstractRepository<UpdateRecord> _repository;
 
-        public DatabaseWorker(EventBroker broker, AbstractUpdateRecordRepository repository)
+        public DatabaseWorker(EventBroker broker, AbstractRepository<UpdateRecord> repository)
         {
             _broker = broker;
             _repository = repository;

@@ -4,7 +4,7 @@ using OurLittleTastyServerBot.Classes.Db.Models;
 
 namespace OurLittleTastyServerBot.Classes.Db.Repositories
 {
-    public class UpdateRecordMemoryRepository : AbstractUpdateRecordRepository
+    public class UpdateRecordRepositoryInMemory : AbstractRepository<UpdateRecord>
     {
         protected override Result<List<UpdateRecord>> SelectFromDb()
         {
@@ -24,6 +24,12 @@ namespace OurLittleTastyServerBot.Classes.Db.Repositories
         protected override Result UpdateIntoDb(UpdateRecord value)
         {
             return Result.Ok();
+        }
+
+        protected override Result<UpdateRecord> GetCopyWithNewIdentity(UpdateRecord source, int id)
+        {
+            // ReSharper disable once RedundantArgumentName
+            return UpdateRecord.Factory.Update(source, id: id);
         }
     }
 }

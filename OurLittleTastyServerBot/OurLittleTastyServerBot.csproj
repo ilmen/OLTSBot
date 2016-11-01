@@ -63,9 +63,11 @@
     <Compile Include="Classes\Configuration\BotSettings.cs" />
     <Compile Include="Classes\Configuration\JsonBotSettingsProvider.cs" />
     <Compile Include="Classes\Db\Models\Cost.cs" />
+    <Compile Include="Classes\Db\Repositories\DialogRepository.cs" />
+    <Compile Include="Classes\Db\Repositories\IRecordWithIdentity.cs" />
     <Compile Include="Classes\Db\SqliteDatabase.cs" />
-    <Compile Include="Classes\Db\Repositories\AbstractUpdateRecordRepository.cs" />
-    <Compile Include="Classes\Db\Repositories\SQLiteUpdateRecordRepository.cs" />
+    <Compile Include="Classes\Db\Repositories\AbstractRepository.cs" />
+    <Compile Include="Classes\Db\Repositories\UpdateRecordRepositoryInSQLite.cs" />
     <Compile Include="Classes\Events\EventBroker.cs" />
     <Compile Include="Classes\Events\EventBrokerProvider.cs" />
     <Compile Include="Classes\Logging\Logger.cs" />
@@ -80,7 +82,7 @@
     <Compile Include="Classes\Observers\UpdateRecordEventArgs.cs" />
     <Compile Include="Classes\Observers\WeatherWorker.cs" />
     <Compile Include="Classes\Db\Models\UpdateRecord.cs" />
-    <Compile Include="Classes\Db\Repositories\UpdateRecordMemoryRepository.cs" />
+    <Compile Include="Classes\Db\Repositories\UpdateRecordRepositoryInMemory.cs" />
     <Compile Include="Classes\Telegram\Models\Chat.cs" />
     <Compile Include="Classes\Telegram\Models\JsonResult.cs" />
     <Compile Include="Classes\Telegram\Models\JsonWebhookInfo.cs" />

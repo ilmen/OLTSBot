@@ -1,10 +1,10 @@
 using System;
-using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using Newtonsoft.Json;
 using OurLittleTastyServerBot.Classes.Configuration;
 using OurLittleTastyServerBot.Classes.Db;
+using OurLittleTastyServerBot.Classes.Db.Models;
 using OurLittleTastyServerBot.Classes.Db.Repositories;
 using OurLittleTastyServerBot.Classes.Events;
 using OurLittleTastyServerBot.Classes.Observers;
@@ -17,7 +17,7 @@ namespace OurLittleTastyServerBot.Classes
         private readonly BotSettings _botSettings;
         private readonly EventBroker _eventBroker;
         private readonly SqliteDatabase _db;
-        private readonly SQLiteUpdateRecordRepository _repository;
+        private readonly AbstractRepository<UpdateRecord> _repository;
 
         public Bot(BotSettings botSettings, EventBroker eventBroker)
         {
@@ -25,7 +25,7 @@ namespace OurLittleTastyServerBot.Classes
             _eventBroker = eventBroker;
 
             _db = new SqliteDatabase("database3.db");
-            _repository = new SQLiteUpdateRecordRepository(_db);
+            _repository = new UpdateRecordRepositoryInSQLite(_db);
 
             InitializeEventBroker();
         }

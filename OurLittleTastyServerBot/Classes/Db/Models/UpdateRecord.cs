@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace OurLittleTastyServerBot.Classes.Db.Models
 {
-    public class UpdateRecord
+    public class UpdateRecord : Repositories.IRecordWithIdentity
     {
         public static class Factory
         {

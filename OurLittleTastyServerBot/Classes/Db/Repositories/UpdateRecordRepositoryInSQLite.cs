@@ -9,11 +9,11 @@ using System.Data.SQLite;
 namespace OurLittleTastyServerBot.Classes.Db.Repositories
 {
     // ReSharper disable once InconsistentNaming
-    public sealed class SQLiteUpdateRecordRepository : AbstractUpdateRecordRepository
+    public sealed class UpdateRecordRepositoryInSQLite : AbstractRepository<UpdateRecord>
     {
         private readonly SqliteDatabase _db;
 
-        public SQLiteUpdateRecordRepository(SqliteDatabase db)
+        public UpdateRecordRepositoryInSQLite(SqliteDatabase db)
         {
             _db = db;
 
@@ -98,7 +98,13 @@ namespace OurLittleTastyServerBot.Classes.Db.Repositories
             return Result.Fail("Обновление записей пока не поддерживается (т.к. не нужно для сообщений пока)", new NotImplementedException());
         }
 
-        private Result<UpdateRecord> Parse(DataRow row)
+        protected override Result<UpdateRecord> GetCopyWithNewIdentity(UpdateRecord source, Int32 id)
+        {
+            // ReSharper disable once RedundantArgumentName
+            return UpdateRecord.Factory.Update(source, id: id);
+        }
+
+        private static Result<UpdateRecord> Parse(DataRow row)
         {
             try
             {

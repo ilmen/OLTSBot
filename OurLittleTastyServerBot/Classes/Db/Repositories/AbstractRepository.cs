@@ -7,34 +7,34 @@ using OurLittleTastyServerBot.Classes.Db.Models;
 
 namespace OurLittleTastyServerBot.Classes.Db.Repositories
 {
-    public abstract class AbstractUpdateRecordRepository
+    public abstract class AbstractRepository<TRecord>
+        where TRecord : IRecordWithIdentity
     {
-        protected ImmutableHashSet<UpdateRecord> Collection = ImmutableHashSet<UpdateRecord>.Empty;
+        protected ImmutableHashSet<TRecord> Collection = ImmutableHashSet<TRecord>.Empty;
 
-        public IEnumerable<UpdateRecord> GetAll()
+        public IEnumerable<TRecord> GetAll()
         {
             return Collection;
         }
 
-        public UpdateRecord GetOne(Int32 id)
+        public TRecord GetOne(Int32 id)
         {
             return GetAll().FirstOrDefault(x => x.Id == id);
         }
 
-        [SuppressMessage("ReSharper", "RedundantArgumentName")]
-        public Result<UpdateRecord> Insert(UpdateRecord value)
+        public Result<TRecord> Insert(TRecord value)
         {
             if (Collection.Contains(value))
             {
-                return Result.Fail<UpdateRecord>("Попытка добавить уже существующую запись Update в коллекцию!");
+                return Result.Fail<TRecord>("Попытка добавить уже существующую запись Update в коллекцию!");
             }
 
             var idResult = InsertIntoDb(value);
-            if (idResult.IsFailured) return Result.Fail<UpdateRecord>(idResult);
+            if (idResult.IsFailured) return Result.Fail<TRecord>(idResult);
 
             // TODO Можно прочитывать из БД объект по полученному Id - проверка качества записи в БД (стоит ли? куча фоновых эффектов)
 
-            var stored = UpdateRecord.Factory.Update(value, id: idResult.Value);
+            var stored = GetCopyWithNewIdentity(value, idResult.Value);
             stored.ThrowIfFailure();    // меняется только Id у корректной записи, все должно быть корректно всегда
 
             Collection = Collection.Add(stored.Value);
@@ -42,7 +42,7 @@ namespace OurLittleTastyServerBot.Classes.Db.Repositories
             return Result.Ok(stored.Value);
         }
 
-        public Result Update(UpdateRecord value)
+        public Result Update(TRecord value)
         {
             if (!Collection.Contains(value))
             {
@@ -53,7 +53,7 @@ namespace OurLittleTastyServerBot.Classes.Db.Repositories
             return result;
         }
 
-        public Result Delete(UpdateRecord value)
+        public Result Delete(TRecord value)
         {
             if (!Collection.Contains(value))
             {
@@ -71,9 +71,10 @@ namespace OurLittleTastyServerBot.Classes.Db.Repositories
             return Result.Ok();
         }
 
-        protected abstract Result<List<UpdateRecord>> SelectFromDb();
-        protected abstract Result<Int32> InsertIntoDb(UpdateRecord value);
+        protected abstract Result<List<TRecord>> SelectFromDb();
+        protected abstract Result<Int32> InsertIntoDb(TRecord value);
         protected abstract Result DeleteFromDb(Int32 id);
-        protected abstract Result UpdateIntoDb(UpdateRecord value);
+        protected abstract Result UpdateIntoDb(TRecord value);
+        protected abstract Result<TRecord> GetCopyWithNewIdentity(TRecord source, Int32 id);
     }
 }
