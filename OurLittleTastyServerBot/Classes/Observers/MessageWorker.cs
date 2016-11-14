@@ -37,7 +37,19 @@ namespace OurLittleTastyServerBot.Classes.Observers
             request.ServicePoint.Expect100Continue = false;
             request.ProtocolVersion = HttpVersion.Version11;
 
-            var postDataString = "chat_id=" + chatId + "&text=" + safeMessage;
+            var btns = new ReplyKeyboardMarkup()
+            {
+                keyboard = new[]
+                {
+                    new [] { "done 1", "done 2" },
+                    new [] { "done 3", "done 4" },
+                    new [] { "done 5" }
+                }
+            };
+            var replyMarkup = Newtonsoft.Json.JsonConvert.SerializeObject(btns);
+
+            //var postDataString = "chat_id=" + chatId + "&text=" + safeMessage;
+            var postDataString = "chat_id=" + chatId + "&text=" + safeMessage + "&reply_markup=" + replyMarkup;
             var postDataBytes = Encoding.UTF8.GetBytes(postDataString);
 
             var json = "";
@@ -61,7 +73,7 @@ namespace OurLittleTastyServerBot.Classes.Observers
             }
             catch (WebException we)
             {
-                Console.Write(we.Response);
+                Console.WriteLine("ERROR:" + we.Message);
 
                 var dataStream = we.Response.GetResponseStream();
                 if (dataStream != null)
@@ -90,6 +102,16 @@ namespace OurLittleTastyServerBot.Classes.Observers
             //        }
             //    }
             //}
+        }
+
+        private class ReplyKeyboardMarkup
+        {
+            public string[][] keyboard { get; set; }
+        }
+
+        private class Keyboard
+        {
+            public string[] text { get; set; }
         }
     }
 }
