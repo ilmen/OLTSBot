@@ -21,7 +21,20 @@ namespace OurLittleTastyServerBot.Classes.Observers
             _logger.WriteDebug("MessageWorker: Отправляется сообщение. ChatId: " + chatId + ". Текст: " + value.Message);
 
             SendMessage2(chatId, value.Message);
+
+            //SendMessageWithBot(chatId, value.Message);
         }
+
+        //private async void SendMessageWithBot(Int32 chatId, string message)
+        //{
+        //    var bot = Bot.bot;
+
+        //    var markup = new Xakpc.TelegramBot.Model.ReplyKeyboardMarkup()
+        //    {
+        //        Keyboard = new[] {new[] {"hello1", "hello2"}}
+        //    };
+        //    await bot.SendMessageAsync(chatId, message, replyMarkup: (Xakpc.TelegramBot.Model.ReplyMarkup)markup);
+        //}
 
         private void SendMessage2(Int32 chatId, string message)
         {
@@ -37,19 +50,9 @@ namespace OurLittleTastyServerBot.Classes.Observers
             request.ServicePoint.Expect100Continue = false;
             request.ProtocolVersion = HttpVersion.Version11;
 
-            var btns = new ReplyKeyboardMarkup()
-            {
-                keyboard = new[]
-                {
-                    new [] { "done 1", "done 2" },
-                    new [] { "done 3", "done 4" },
-                    new [] { "done 5" }
-                }
-            };
-            var replyMarkup = Newtonsoft.Json.JsonConvert.SerializeObject(btns);
-
-            //var postDataString = "chat_id=" + chatId + "&text=" + safeMessage;
-            var postDataString = "chat_id=" + chatId + "&text=" + safeMessage + "&reply_markup=" + replyMarkup;
+            //var postDataString = GetMessage(chatId, safeMessage);
+            //var postDataString = GetMessageWithReplyKeyboardMarkup(chatId, safeMessage);
+            var postDataString = GetMessageWithInlineKeyboardMarkup(chatId, safeMessage);
             var postDataBytes = Encoding.UTF8.GetBytes(postDataString);
 
             var json = "";
@@ -104,6 +107,47 @@ namespace OurLittleTastyServerBot.Classes.Observers
             //}
         }
 
+        private static string GetMessage(int chatId, string safeMessage)
+        {
+            return "chat_id=" + chatId + "&text=" + safeMessage;
+        }
+
+        private static string GetMessageWithReplyKeyboardMarkup(int chatId, string safeMessage)
+        {
+            var btns = new ReplyKeyboardMarkup()
+            {
+                keyboard = new[]
+                {
+                    new[] {"done 1", "done 2"},
+                    new[] {"done 3", "done 4"},
+                    new[] {"done 5"}
+                }
+            };
+            var replyMarkup = Newtonsoft.Json.JsonConvert.SerializeObject(btns);
+
+            var timemark = DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            var postDataString = "chat_id=" + chatId + "&text=" + safeMessage + "\r\n" + timemark + "&reply_markup=" + replyMarkup;
+            return postDataString;
+        }
+
+        private static string GetMessageWithInlineKeyboardMarkup(int chatId, string safeMessage)
+        {
+            var btns = new InlineKeyboardMarkup()
+            {
+                inline_keyboard = new InlineKeyboardButton[][]
+                {
+                    new [] { new InlineKeyboardButton { text = "done 1" }, new InlineKeyboardButton { text = "done 2" }},
+                    new [] { new InlineKeyboardButton { text = "done 3" }, new InlineKeyboardButton { text = "done 4" }},
+                    new [] { new InlineKeyboardButton { text = "done 5" }},
+                }
+            };
+            var replyMarkup = Newtonsoft.Json.JsonConvert.SerializeObject(btns);
+
+            var timemark = DateTime.Now.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            var postDataString = "chat_id=" + chatId + "&text=" + safeMessage + "\r\n" + timemark + "&reply_markup=" + replyMarkup;
+            return postDataString;
+        }
+
         private class ReplyKeyboardMarkup
         {
             public string[][] keyboard { get; set; }
@@ -112,6 +156,16 @@ namespace OurLittleTastyServerBot.Classes.Observers
         private class Keyboard
         {
             public string[] text { get; set; }
+        }
+
+        private class InlineKeyboardMarkup
+        {
+            public InlineKeyboardButton[][] inline_keyboard { get; set; }
+        }
+
+        private class InlineKeyboardButton
+        {
+            public string text { get; set; }
         }
     }
 }

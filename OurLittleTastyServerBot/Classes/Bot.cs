@@ -14,6 +14,8 @@ namespace OurLittleTastyServerBot.Classes
 {
     public class Bot
     {
+        //public static Xakpc.TelegramBot.Client.ITelegramBotApiClient bot;
+
         private readonly BotSettings _botSettings;
         private readonly EventBroker _eventBroker;
         private readonly SqliteDatabase _db;
@@ -48,6 +50,8 @@ namespace OurLittleTastyServerBot.Classes
             {
                 try
                 {
+                    //bot = new Xakpc.TelegramBot.Client.TelegramBotApiClient(_botSettings.BotToken);
+
                     var getUpdatesResult = GetUpdates();
                     getUpdatesResult.ThrowIfFailure();
 
