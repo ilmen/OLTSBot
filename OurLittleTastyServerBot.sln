@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OurLittleTastyServerBot", "OurLittleTastyServerBot\OurLittleTastyServerBot.csproj", "{5BD79F62-96B8-445A-80AD-1B238FBF0558}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamForRead", "StreamForRead\StreamForRead.csproj", "{68842336-6F97-4D92-96E6-AC57A1EE48F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -48,6 +50,31 @@ Global
 		{5BD79F62-96B8-445A-80AD-1B238FBF0558}.SingleImage|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5BD79F62-96B8-445A-80AD-1B238FBF0558}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
 		{5BD79F62-96B8-445A-80AD-1B238FBF0558}.SingleImage|x86.ActiveCfg = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.CD_ROM|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.CD_ROM|Mixed Platforms.Build.0 = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.CD_ROM|x86.ActiveCfg = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.DVD-5|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.DVD-5|Mixed Platforms.Build.0 = Debug|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.DVD-5|x86.ActiveCfg = Debug|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.Release|x86.ActiveCfg = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.SingleImage|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
+		{68842336-6F97-4D92-96E6-AC57A1EE48F2}.SingleImage|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
