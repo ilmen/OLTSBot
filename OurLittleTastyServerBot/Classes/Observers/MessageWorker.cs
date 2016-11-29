@@ -51,8 +51,8 @@ namespace OurLittleTastyServerBot.Classes.Observers
             request.ProtocolVersion = HttpVersion.Version11;
 
             //var postDataString = GetMessage(chatId, safeMessage);
-            //var postDataString = GetMessageWithReplyKeyboardMarkup(chatId, safeMessage);
-            var postDataString = GetMessageWithInlineKeyboardMarkup(chatId, safeMessage);
+            var postDataString = GetMessageWithReplyKeyboardMarkup(chatId, safeMessage);
+            //var postDataString = GetMessageWithInlineKeyboardMarkup(chatId, safeMessage);
             var postDataBytes = Encoding.UTF8.GetBytes(postDataString);
 
             var json = "";
