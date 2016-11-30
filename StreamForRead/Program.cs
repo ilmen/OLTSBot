@@ -1,4 +1,6 @@
 ﻿using System;
+using Ninject;
+using StreamForRead.Models;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -6,42 +8,43 @@ namespace StreamForRead
 {
     public static class Program
     {
-        private static ITelegramBotClient _bot;
+        private static readonly StandardKernel Kernel = new StandardKernel(new IoC.CommonModule());
 
         public static void Main(string[] args)
         {
-            var token = Properties.Settings.Default.BotToken.Trim();
-            if (String.IsNullOrEmpty(token))
+            var settings = Kernel.Get<IBotSettingsFactory>();
+            var checkTokenAvailability = settings.GetToken();
+            if (checkTokenAvailability.IsFailured)
             {
-                Console.WriteLine("Getting token error. Check config file!");
+                Console.WriteLine(checkTokenAvailability.ErrorText);
                 Console.ReadLine();
                 return;
             }
 
             Console.WriteLine("Bot starting...");
 
-            StartBot(token);
+            StartBot();
 
             Console.ReadLine();
         }
 
-        private static async void StartBot(string token)
+        private static async void StartBot()
         {
             // see: https://github.com/MrRoundRobin/telegram.bot
 
-            _bot = new TelegramBotClient(token);
-            
-            var info = await _bot.GetMeAsync();
+            var bot = Kernel.Get<ITelegramBotClient>();
+
+            var info = await bot.GetMeAsync();
             Console.WriteLine("Bot \"{0}\" started.", info.FirstName);
 
             // remove web hook
-            await _bot.SetWebhookAsync();
+            await bot.SetWebhookAsync();
 
             while (true)
             {
                 try
                 {
-                    var updates = await _bot.GetUpdatesAsync();
+                    var updates = await bot.GetUpdatesAsync();
                     foreach (var update in updates)
                     {
                         Work(update);
@@ -74,7 +77,8 @@ namespace StreamForRead
             }
             if (!String.IsNullOrEmpty(answer))
             {
-                _bot.SendTextMessageAsync(update.Message.Chat.Id, answer);
+                var bot = Kernel.Get<ITelegramBotClient>();
+                bot.SendTextMessageAsync(update.Message.Chat.Id, answer);
             }
         }
     }

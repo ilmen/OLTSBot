@@ -76,7 +76,7 @@ namespace OurLittleTastyServerBot.Classes
         {
             var url = string.Format(_botSettings.TelegramApiUrlPattern, _botSettings.BotToken, "getUpdates");
             var result = RequestHelper.Get(url);
-            if (result.IsFailured) return Result.Fail<JsonResult<Update[]>>(result);
+            if (result.IsFailured) return result.FailCastTo<JsonResult<Update[]>>();
 
             var json = result.Value;
             var updates = JsonConvert.DeserializeObject<JsonResult<Update[]>>(json);

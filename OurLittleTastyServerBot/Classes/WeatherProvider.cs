@@ -17,7 +17,7 @@ namespace OurLittleTastyServerBot.Classes
         {
             var url = GetWeatherUrl("novosibirsk");
             var result = RequestHelper.Get(url);
-            if (result.IsFailured) return Result.Fail<Weather>(result);
+            if (result.IsFailured) return result.FailCastTo<Weather>();
 
             ServerWeather serverWeather;
             try
@@ -31,7 +31,7 @@ namespace OurLittleTastyServerBot.Classes
             }
 
             var weather = Weather.Parse(serverWeather);
-            if (weather.IsFailured) return Result.Fail<Weather>(weather);
+            if (weather.IsFailured) return weather.FailCastTo<Weather>();
             return Result.Ok(weather.Value);
         }
     }

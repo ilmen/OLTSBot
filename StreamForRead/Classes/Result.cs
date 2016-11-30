@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace OurLittleTastyServerBot.Classes
+namespace StreamForRead.Classes
 {
     public class Result
     {

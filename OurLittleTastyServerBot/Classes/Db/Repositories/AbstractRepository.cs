@@ -30,7 +30,7 @@ namespace OurLittleTastyServerBot.Classes.Db.Repositories
             }
 
             var idResult = InsertIntoDb(value);
-            if (idResult.IsFailured) return Result.Fail<TRecord>(idResult);
+            if (idResult.IsFailured) return idResult.FailCastTo<TRecord>();
 
             // TODO Можно прочитывать из БД объект по полученному Id - проверка качества записи в БД (стоит ли? куча фоновых эффектов)
 

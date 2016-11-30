@@ -22,7 +22,7 @@ namespace OurLittleTastyServerBot.Classes.Db.Models
                     UserName = userName
                 };
                 var validateResult = Validate(record, isNew);
-                return !validateResult.IsFailured ? Result.Ok(record) : Result.Fail<UpdateRecord>(validateResult);
+                return !validateResult.IsFailured ? Result.Ok(record) : validateResult.FailCastTo<UpdateRecord>();
             }
 
             public static Result<UpdateRecord> Create(Int32 id, Int32 updateOuterId, Int32 messageOuterId, DateTime sendTime, DateTime insertTime, string text, Int32 chatOuterId, Int32 userOuterId, string userName)

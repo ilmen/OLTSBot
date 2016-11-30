@@ -82,7 +82,7 @@ namespace OurLittleTastyServerBot
         {
             var checkUrl = string.Format(settings.TelegramApiUrlPattern, settings.BotToken, "getMe");
             var checkResult = RequestHelper.Get(checkUrl);
-            if (checkResult.IsFailured) return Result.Fail<User>(checkResult);
+            if (checkResult.IsFailured) return checkResult.FailCastTo<User>();
 
             try
             {
@@ -102,7 +102,7 @@ namespace OurLittleTastyServerBot
             // проверяем установлен ли webhook
             var checkUrl = string.Format(settings.TelegramApiUrlPattern, settings.BotToken, "getWebhookInfo");
             var checkResult = RequestHelper.Get(checkUrl);
-            if (checkResult.IsFailured) return Result.Fail(checkResult);
+            if (checkResult.IsFailured) return checkResult;
 
             var result = JsonConvert.DeserializeObject<JsonResult<JsonWebhookInfo>>(checkResult.Value);
             if (!result.Ok) return Result.Fail("Service has rejected a webhookinfo request!");

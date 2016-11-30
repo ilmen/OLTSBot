@@ -31,7 +31,7 @@ namespace OurLittleTastyServerBot.Classes.Db.Repositories
             const string QUERY = "select * from updates";
 
             var result = _db.Select(QUERY);
-            if (result.IsFailured) return Result.Fail<List<UpdateRecord>>(result);
+            if (result.IsFailured) return result.FailCastTo<List<UpdateRecord>>();
 
             var parseResults = result.Value.Rows.Cast<DataRow>()
                 .Select(Parse)
@@ -64,7 +64,7 @@ namespace OurLittleTastyServerBot.Classes.Db.Repositories
                 new SQLiteParameter("@chatOuterId", value.ChatOuterId),
                 new SQLiteParameter("@userOuterId", value.UserOuterId),
                 new SQLiteParameter("@userName", value.UserName));
-            if (insertResult.IsFailured) return Result.Fail<Int32>(insertResult);
+            if (insertResult.IsFailured) return insertResult.FailCastTo<Int32>();
 
             var idQuery =
                 String.Format(
